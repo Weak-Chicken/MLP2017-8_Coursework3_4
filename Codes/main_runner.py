@@ -42,22 +42,22 @@ from architecture_builders import DNNBuilder
 from utils.storage import build_experiment_folder, save_statistics
 
 batch_size = 50
-input_dim = 518
-target_dim = 4858
-# input_dim = 28 * 28
-# target_dim = 47
+# input_dim = 518
+# target_dim = 236
+input_dim = 28 * 28
+target_dim = 47
 epochs = 100
 
 rng = np.random.RandomState(seed=DEFAULT_SEED)
 
-train_data = FMADataProvider(number_of_class=4858, which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
-valid_data = FMADataProvider(number_of_class=4858, which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
+# train_data = FMADataProvider(number_of_class=4858, which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
+# valid_data = FMADataProvider(number_of_class=4858, which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 # train_data = FMADataProvider_Reduced(number_of_class=236, which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 # valid_data = FMADataProvider_Reduced(number_of_class=236, which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 # train_data = FMADataProvider_Abandoned(number_of_class=10, which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 # valid_data = FMADataProvider_Abandoned(number_of_class=10, which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
-# train_data = EMNISTDataProvider(which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
-# valid_data = EMNISTDataProvider(which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
+train_data = EMNISTDataProvider(which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
+valid_data = EMNISTDataProvider(which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 test_data = EMNISTDataProvider(which_set='test', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 
 X = tf.placeholder("float", [None, input_dim])  # batch_size by input data (batch size not yet determined)
@@ -72,8 +72,8 @@ ERR = np.zeros(epochs)
 predict_ACC = np.zeros(epochs)
 predict_ERR = np.zeros(epochs)
 
-layers = [2, 3, 4]
-neurons = [200, 400, 600, 800]
+layers = [2]
+neurons = [200]
 
 # layers = [0]
 # neurons = [0]
@@ -137,7 +137,8 @@ for layer in layers:
         plt.xlabel('Epochs')
         plt.ylabel('ERR')
         plt.title('Deep neural network performance')
-        plt.savefig('Results/ERR_plots_L{}_N{}.png'.format(layer, neuron_num))
+        plt.legend(['Train', 'Vaild'], loc='upper right')
+        plt.savefig('Results/ERR_plots_L{}_N{}.pdf'.format(layer, neuron_num))
         plt.close()
 
         plt.plot(np.arange(epochs), ACC, 'r')
@@ -145,5 +146,6 @@ for layer in layers:
         plt.xlabel('Epochs')
         plt.ylabel('ACC')
         plt.title('Deep neural network performance')
-        plt.savefig('Results/ACC_plots_L{}_N{}.png'.format(layer, neuron_num))
+        plt.legend(['Train', 'Vaild'], loc='upper right')
+        plt.savefig('Results/ACC_plots_L{}_N{}.pdf'.format(layer, neuron_num))
         plt.close()
