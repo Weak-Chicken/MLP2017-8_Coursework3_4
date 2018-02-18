@@ -36,20 +36,26 @@ from tensorflow.python.ops.nn_ops import leaky_relu
 from data_providers import EMNISTDataProvider
 from data_providers import FMADataProvider
 from data_providers import DEFAULT_SEED
+from data_providers import FMADataProvider_Reduced
+from data_providers import FMADataProvider_Abandoned
 from architecture_builders import DNNBuilder
 from utils.storage import build_experiment_folder, save_statistics
 
-batch_size = 100
+batch_size = 50
 input_dim = 518
 target_dim = 4858
 # input_dim = 28 * 28
 # target_dim = 47
-epochs = 50
+epochs = 100
 
 rng = np.random.RandomState(seed=DEFAULT_SEED)
 
 train_data = FMADataProvider(number_of_class=4858, which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 valid_data = FMADataProvider(number_of_class=4858, which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
+# train_data = FMADataProvider_Reduced(number_of_class=236, which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
+# valid_data = FMADataProvider_Reduced(number_of_class=236, which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
+# train_data = FMADataProvider_Abandoned(number_of_class=10, which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
+# valid_data = FMADataProvider_Abandoned(number_of_class=10, which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 # train_data = EMNISTDataProvider(which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 # valid_data = EMNISTDataProvider(which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 test_data = EMNISTDataProvider(which_set='test', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
@@ -66,8 +72,8 @@ ERR = np.zeros(epochs)
 predict_ACC = np.zeros(epochs)
 predict_ERR = np.zeros(epochs)
 
-layers = [2, 3, 4, 5, 6, 7, 8, 9]
-neurons = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
+layers = [2, 3, 4]
+neurons = [200, 400, 600, 800]
 
 # layers = [0]
 # neurons = [0]
@@ -78,8 +84,8 @@ for layer in layers:
         predict_op = test(output, training_bool, dropout_rate)
 
         cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=Y))
-        train_op = tf.train.AdamOptimizer().minimize(cost)
-        # train_op = tf.train.GradientDescentOptimizer(0.02).minimize(cost)
+        train_op = tf.train.AdamOptimizer(learning_rate=0.002).minimize(cost)
+        # train_op = tf.train.GradientDescentOptimizer(0.000005).minimize(cost)
 
         per_datapoint_pred_is_correct = tf.equal(tf.argmax(predict_op, 1), tf.argmax(Y, 1))
         accuracy = tf.reduce_mean(tf.cast(per_datapoint_pred_is_correct, tf.float32))
@@ -114,7 +120,7 @@ for layer in layers:
                 acc /= train_data.num_batches
                 err_predict /= valid_data.num_batches
                 acc_predict /= valid_data.num_batches
-                print('Epoch', str(i + 1), "Layer ", layer, "Neuron_Num ", neuron_num, ":", err, acc)
+                print('Epoch', str(i + 1), "Layer ", layer, "Neuron_Num ", neuron_num, ":", err, acc, "|", err_predict, acc_predict)
                 ERR[i] = err
                 ACC[i] = acc
                 predict_ERR[i] = err_predict
