@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.2.17)  18 FEB 2018 21:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.2.17)  18 FEB 2018 22:25
 entering extended mode
 **./interimReport-G91.tex
 (interimReport-G91.tex
@@ -654,18 +654,20 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [2]
-<Figs/AL_Train_error_plots_L2_N3.pdf, id=22, pagebox=cropbox, 462.52798pt x 346
-.89601pt>
-File: Figs/AL_Train_error_plots_L2_N3.pdf Graphic file (type pdf)
-<use Figs/AL_Train_error_plots_L2_N3.pdf>
-Package pdftex.def Info: Figs/AL_Train_error_plots_L2_N3.pdf  used on input lin
-e 152. on input line 152.
+<Figs/St_ERR_plots_L2_N200.pdf, id=22, pagebox=cropbox, 462.52798pt x 346.89601
+pt>
+File: Figs/St_ERR_plots_L2_N200.pdf Graphic file (type pdf)
+<use Figs/St_ERR_plots_L2_N200.pdf>
+Package pdftex.def Info: Figs/St_ERR_plots_L2_N200.pdf  used on input line 152.
+ on input line 152.
 Package pdftex.def Info: Requested size: 120.44499pt x 90.3375pt on input line 
 152.
-File: Figs/AL_Train_error_plots_L2_N3.pdf Graphic file (type pdf)
-<use Figs/AL_Train_error_plots_L2_N3.pdf>
-Package pdftex.def Info: Figs/AL_Train_error_plots_L2_N3.pdf  used on input lin
-e 155. on input line 155.
+<Figs/St_ACC_plots_L2_N200.pdf, id=23, pagebox=cropbox, 462.52798pt x 346.89601
+pt>
+File: Figs/St_ACC_plots_L2_N200.pdf Graphic file (type pdf)
+<use Figs/St_ACC_plots_L2_N200.pdf>
+Package pdftex.def Info: Figs/St_ACC_plots_L2_N200.pdf  used on input line 155.
+ on input line 155.
 Package pdftex.def Info: Requested size: 120.44499pt x 90.3375pt on input line 
 155.
 
@@ -673,13 +675,15 @@ Overfull \hbox (8.28871pt too wide) in paragraph at lines 152--157
  [][][][] 
  []
 
+<Figs/AL_Train_error_plots_L2_N3.pdf, id=24, pagebox=cropbox, 462.52798pt x 346
+.89601pt>
 File: Figs/AL_Train_error_plots_L2_N3.pdf Graphic file (type pdf)
 <use Figs/AL_Train_error_plots_L2_N3.pdf>
 Package pdftex.def Info: Figs/AL_Train_error_plots_L2_N3.pdf  used on input lin
 e 170. on input line 170.
 Package pdftex.def Info: Requested size: 120.44499pt x 90.3375pt on input line 
 170.
-<Figs/AL_Train_accuracy_plots_L2_N3.pdf, id=23, pagebox=cropbox, 462.52798pt x 
+<Figs/AL_Train_accuracy_plots_L2_N3.pdf, id=25, pagebox=cropbox, 462.52798pt x 
 346.89601pt>
 File: Figs/AL_Train_accuracy_plots_L2_N3.pdf Graphic file (type pdf)
 <use Figs/AL_Train_accuracy_plots_L2_N3.pdf>
@@ -687,7 +691,7 @@ Package pdftex.def Info: Figs/AL_Train_accuracy_plots_L2_N3.pdf  used on input
 line 173. on input line 173.
 Package pdftex.def Info: Requested size: 120.44499pt x 90.3375pt on input line 
 173.
-<Figs/AL_Valid_error_plots_L2_N3.pdf, id=24, pagebox=cropbox, 462.52798pt x 346
+<Figs/AL_Valid_error_plots_L2_N3.pdf, id=26, pagebox=cropbox, 462.52798pt x 346
 .89601pt>
 File: Figs/AL_Valid_error_plots_L2_N3.pdf Graphic file (type pdf)
 <use Figs/AL_Valid_error_plots_L2_N3.pdf>
@@ -695,7 +699,7 @@ Package pdftex.def Info: Figs/AL_Valid_error_plots_L2_N3.pdf  used on input lin
 e 177. on input line 177.
 Package pdftex.def Info: Requested size: 120.44499pt x 90.3375pt on input line 
 177.
-<Figs/AL_Valid_accuracy_plots_L2_N3.pdf, id=25, pagebox=cropbox, 462.52798pt x 
+<Figs/AL_Valid_accuracy_plots_L2_N3.pdf, id=27, pagebox=cropbox, 462.52798pt x 
 346.89601pt>
 File: Figs/AL_Valid_accuracy_plots_L2_N3.pdf Graphic file (type pdf)
 <use Figs/AL_Valid_accuracy_plots_L2_N3.pdf>
@@ -716,7 +720,7 @@ Overfull \hbox (8.28871pt too wide) in paragraph at lines 170--182
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Figs/Re_Train_error_plots_L2_N3.pdf, id=27, pagebox=cropbox, 462.52798pt x 346
+<Figs/Re_Train_error_plots_L2_N3.pdf, id=29, pagebox=cropbox, 462.52798pt x 346
 .89601pt>
 File: Figs/Re_Train_error_plots_L2_N3.pdf Graphic file (type pdf)
 <use Figs/Re_Train_error_plots_L2_N3.pdf>
@@ -724,7 +728,7 @@ Package pdftex.def Info: Figs/Re_Train_error_plots_L2_N3.pdf  used on input lin
 e 199. on input line 199.
 Package pdftex.def Info: Requested size: 120.44499pt x 90.3375pt on input line 
 199.
-<Figs/Re_Train_accuracy_plots_L2_N3.pdf, id=28, pagebox=cropbox, 462.52798pt x 
+<Figs/Re_Train_accuracy_plots_L2_N3.pdf, id=30, pagebox=cropbox, 462.52798pt x 
 346.89601pt>
 File: Figs/Re_Train_accuracy_plots_L2_N3.pdf Graphic file (type pdf)
 <use Figs/Re_Train_accuracy_plots_L2_N3.pdf>
@@ -732,7 +736,7 @@ Package pdftex.def Info: Figs/Re_Train_accuracy_plots_L2_N3.pdf  used on input
 line 202. on input line 202.
 Package pdftex.def Info: Requested size: 120.44499pt x 90.3375pt on input line 
 202.
-<Figs/Re_Valid_error_plots_L2_N3.pdf, id=29, pagebox=cropbox, 462.52798pt x 346
+<Figs/Re_Valid_error_plots_L2_N3.pdf, id=31, pagebox=cropbox, 462.52798pt x 346
 .89601pt>
 File: Figs/Re_Valid_error_plots_L2_N3.pdf Graphic file (type pdf)
 <use Figs/Re_Valid_error_plots_L2_N3.pdf>
@@ -740,7 +744,7 @@ Package pdftex.def Info: Figs/Re_Valid_error_plots_L2_N3.pdf  used on input lin
 e 206. on input line 206.
 Package pdftex.def Info: Requested size: 120.44499pt x 90.3375pt on input line 
 206.
-<Figs/Re_Valid_accuracy_plots_L2_N3.pdf, id=30, pagebox=cropbox, 462.52798pt x 
+<Figs/Re_Valid_accuracy_plots_L2_N3.pdf, id=32, pagebox=cropbox, 462.52798pt x 
 346.89601pt>
 File: Figs/Re_Valid_accuracy_plots_L2_N3.pdf Graphic file (type pdf)
 <use Figs/Re_Valid_accuracy_plots_L2_N3.pdf>
@@ -761,8 +765,15 @@ Overfull \hbox (8.28871pt too wide) in paragraph at lines 199--211
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[3 <./Figs/AL_Train_error_plots_L2_N3.pdf> <./Figs/AL_Train_accuracy_plots_L2_N
-3.pdf
+[3 <./Figs/St_ERR_plots_L2_N200.pdf> <./Figs/St_ACC_plots_L2_N200.pdf
+
+pdfTeX warning: pdflatex (file ./Figs/St_ACC_plots_L2_N200.pdf): PDF inclusion:
+ multiple pdfs with page group included in a single page
+> <./Figs/AL_Train_error_plots_L2_N3.pdf
+
+pdfTeX warning: pdflatex (file ./Figs/AL_Train_error_plots_L2_N3.pdf): PDF incl
+usion: multiple pdfs with page group included in a single page
+> <./Figs/AL_Train_accuracy_plots_L2_N3.pdf
 
 pdfTeX warning: pdflatex (file ./Figs/AL_Train_accuracy_plots_L2_N3.pdf): PDF i
 nclusion: multiple pdfs with page group included in a single page
@@ -777,7 +788,7 @@ nclusion: multiple pdfs with page group included in a single page
 >]
 Underfull \vbox (badness 5985) has occurred while \output is active []
 
-<Figs/Ab_Train_error_plots_L2_N3.pdf, id=199, pagebox=cropbox, 462.52798pt x 34
+<Figs/Ab_Train_error_plots_L2_N3.pdf, id=277, pagebox=cropbox, 462.52798pt x 34
 6.89601pt>
 File: Figs/Ab_Train_error_plots_L2_N3.pdf Graphic file (type pdf)
 <use Figs/Ab_Train_error_plots_L2_N3.pdf>
@@ -785,7 +796,7 @@ Package pdftex.def Info: Figs/Ab_Train_error_plots_L2_N3.pdf  used on input lin
 e 230. on input line 230.
 Package pdftex.def Info: Requested size: 120.44499pt x 90.3375pt on input line 
 230.
-<Figs/Ab_Train_accuracy_plots_L2_N3.pdf, id=200, pagebox=cropbox, 462.52798pt x
+<Figs/Ab_Train_accuracy_plots_L2_N3.pdf, id=278, pagebox=cropbox, 462.52798pt x
  346.89601pt>
 File: Figs/Ab_Train_accuracy_plots_L2_N3.pdf Graphic file (type pdf)
 <use Figs/Ab_Train_accuracy_plots_L2_N3.pdf>
@@ -793,7 +804,7 @@ Package pdftex.def Info: Figs/Ab_Train_accuracy_plots_L2_N3.pdf  used on input
 line 233. on input line 233.
 Package pdftex.def Info: Requested size: 120.44499pt x 90.3375pt on input line 
 233.
-<Figs/Ab_Valid_error_plots_L2_N3.pdf, id=201, pagebox=cropbox, 462.52798pt x 34
+<Figs/Ab_Valid_error_plots_L2_N3.pdf, id=279, pagebox=cropbox, 462.52798pt x 34
 6.89601pt>
 File: Figs/Ab_Valid_error_plots_L2_N3.pdf Graphic file (type pdf)
 <use Figs/Ab_Valid_error_plots_L2_N3.pdf>
@@ -801,7 +812,7 @@ Package pdftex.def Info: Figs/Ab_Valid_error_plots_L2_N3.pdf  used on input lin
 e 237. on input line 237.
 Package pdftex.def Info: Requested size: 120.44499pt x 90.3375pt on input line 
 237.
-<Figs/Ab_Valid_accuracy_plots_L2_N3.pdf, id=202, pagebox=cropbox, 462.52798pt x
+<Figs/Ab_Valid_accuracy_plots_L2_N3.pdf, id=280, pagebox=cropbox, 462.52798pt x
  346.89601pt>
 File: Figs/Ab_Valid_accuracy_plots_L2_N3.pdf Graphic file (type pdf)
 <use Figs/Ab_Valid_accuracy_plots_L2_N3.pdf>
@@ -867,10 +878,10 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 267.
  ) 
 Here is how much of TeX's memory you used:
- 9521 strings out of 493312
- 139293 string characters out of 3138879
+ 9531 strings out of 493312
+ 139659 string characters out of 3138879
  258262 words of memory out of 3000000
- 12663 multiletter control sequences out of 15000+200000
+ 12671 multiletter control sequences out of 15000+200000
  47360 words of font info for 207 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  31i,11n,45p,1019b,341s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -879,9 +890,9 @@ KTeX 2.9/fonts/type1/public/txfonts/rtxr.pfb><C:/Program Files/MiKTeX 2.9/fonts
 /type1/public/txfonts/txsy.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/tim
 es/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:
 /Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb>
-Output written on interimReport-G91.pdf (5 pages, 324301 bytes).
+Output written on interimReport-G91.pdf (5 pages, 353460 bytes).
 PDF statistics:
- 555 PDF objects out of 1000 (max. 8388607)
+ 633 PDF objects out of 1000 (max. 8388607)
  38 named destinations out of 1000 (max. 500000)
- 29245 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 29255 words of extra memory for PDF output out of 29859 (max. 10000000)
 
