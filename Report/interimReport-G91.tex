@@ -134,12 +134,130 @@ In this report, as a mid-term report, our work is mainly about the classificatio
 
 \section{Methodology}
 
-
+\newpage
 \section{Experiments}
-In the coursework 3
+After the data pre-processing, we started to implement our baseline experiments. Our main idea is to test the data set with some normal deep neural networks (DNN) we have built during coursework 1 and 2. The reason why we choose only DNN to perform our baseline experiments is  that DNN has been well tested and understood by all of us. Meanwhile, we are not familiar with the data set. If there are some unexpected errors in the results, we can focus on solving the data set problems rather than worrying about both neural network problems and data set problems.
 
+In this section, we will present our baseline experiments in time line order. We will first introduce the parameters we used to set up the DNNs. Then, we will describe our three group of baseline experiments and what we learned from them.
+
+\subsection{Neural network structure}
+Our DNN structure is quite simple. We used leaky-ReLU as the activation function in the neural network. We chose the Adam optimizer as our optimizer. We also defined the loss as the "softmax cross entropy with logits". We also include the batch normalization and dropout layer in our DNN. The dropout rate is set to 0.2. The learning rate, hidden layer number and the number of neurons in the hidden layer will be varied during the experiments.
+
+After we constructed our neural network, we tested it on the EMINST data set with learning rate is 0.2, hidden layer is 3 with each layer has 500 neurons. The results are shown as following:
+
+\begin{figure}[h]%
+\centering
+\subfigure[Error]{%
+\label{fig:lr0.02}%
+\includegraphics[height=1.25in]{Figs/AL_Train_error_plots_L2_N3.pdf}}%
+\subfigure[Accuracy]{%
+\label{fig:lr0.04}%
+\includegraphics[height=1.25in]{Figs/AL_Train_error_plots_L2_N3.pdf}}%
+\qquad
+\caption{The EMINST on DNN}
+\label{fig:NNstucture}
+\end{figure}
+
+Which shows that our neural network is constructed correctly.
+
+\subsection{Experiments with full data}
+After the neural network testing, we then provide the FMA data set to our DNN. We varied the hidden layer numbers to be 2, 3, 4 with the number of neurons in each hidden layer to be 200, 400, 600 and 800 respectively. Each neural network will be trained in 100 epochs. Which means we have $3 \times 4 \times 100 = 1200$ epochs in total. The results are shown as following:
+
+\begin{figure}[h]%
+\centering
+\subfigure[Error of Train]{%
+\label{fig:lr0.02}%
+\includegraphics[height=1.25in]{Figs/AL_Train_error_plots_L2_N3.pdf}}%
+\subfigure[Accuracy of Train]{%
+\label{fig:lr0.04}%
+\includegraphics[height=1.25in]{Figs/AL_Train_accuracy_plots_L2_N3.pdf}}%
+\qquad
+\subfigure[Error of Valid]{%
+\label{fig:lr0.06}%
+\includegraphics[height=1.25in]{Figs/AL_Valid_error_plots_L2_N3.pdf}}%
+\subfigure[Accuracy of Valid]{%
+\label{fig:lr0.08}%
+\includegraphics[height=1.25in]{Figs/AL_Valid_accuracy_plots_L2_N3.pdf}}%
+\qquad
+\caption{The error and accuracy curves of both training and validation sets with full data tested}
+\label{fig:fulldata}
+\end{figure}
+
+As the Figure.\ref{fig:fulldata} shown, both the error of training set and validation set are increasing, which indicates that there is something wrong and the DNN totally unable to learn the features.
+
+At the beginning, we thought it might be the learning rate problem. However, after we carefully searched, the learning rate have been set to a proper value and the neural network still cannot learn. The results are unacceptable. Even if DNN is not suitable for this task, the error on training set should not increase as the increasing of epochs. Since the DNN worked well in EMINST data set, we believed there should be something wrong with the data set.
+
+After our carefully checking, we noticed the data set is not balanced. As mentioned before, some songs belong to more than one genres. In our data pre-processing procedure, we mapped the multiple genres into new single genre so that we can implement one-hot coding. However, this increase the number of total genres vastly. The original number of genres are 236 in total. After our pre-processing, the total genre number is 4858, which is about 8 times of our input feature dimensions (which is 518 in total.). Therefore, our neural network cannot perform the classifying work. Because the output dimension is even larger than the input dimension. Therefore, we decide to decrease the number of genres.
+
+\subsection{Experiments with reduced data}
+To decrease the number of genres without removing any data, we decide to merge the genres. If one song has more than one genres, we only left the first genre it mentioned as its genre. By doing so, we deceased the number of genres from 4858 to 236, which is smaller than the input dimension. With all parameters unchanged, we implement our experiments again on the reduced data set.The results are shown as following:
+
+\begin{figure}[h]%
+\centering
+\subfigure[Error of Train]{%
+\label{fig:lr0.02}%
+\includegraphics[height=1.25in]{Figs/Re_Train_error_plots_L2_N3.pdf}}%
+\subfigure[Accuracy of Train]{%
+\label{fig:lr0.04}%
+\includegraphics[height=1.25in]{Figs/Re_Train_accuracy_plots_L2_N3.pdf}}%
+\qquad
+\subfigure[Error of Valid]{%
+\label{fig:lr0.06}%
+\includegraphics[height=1.25in]{Figs/Re_Valid_error_plots_L2_N3.pdf}}%
+\subfigure[Accuracy of Valid]{%
+\label{fig:lr0.08}%
+\includegraphics[height=1.25in]{Figs/Re_Valid_accuracy_plots_L2_N3.pdf}}%
+\qquad
+\caption{The error and accuracy curves of both training and validation sets with reduced data tested}
+\label{fig:reduceddata}
+\end{figure}
+
+As the Figure.\ref{fig:reduceddata} shown. The results are still quiet bad. By looking at the error of training set, we can infer that there is still something wrong with the data set. Although the error of training set is decreasing at the beginning, it is also increasing at the end. We think no matter how bad the neural network is in dealing with the classifying work, the error of training set should not increase at any time.
+
+Meanwhile, the accuracy of validation set is quite interesting. Some of the situation, the accuracy of validation set is suddenly increased to about 1 (100$\%$ accuracy) and suddenly decreased to zero again. We guessing this is because when we cutting the data, there is something wrong with our shuffle process which cause the data in validation set is not shuffled. Therefore, since only one or two genres in the validation set, the accuracy rate will be look like this.
+
+Later, we found that we forgot to shuffle the reduced validation set. Due to the time limitation, we cannot implement this experiments again. However, since we shuffle the data separately, other data sets are not affected.
+
+After testing with various learning rates and other parameters, we thought it is still the data set problem. Inspired by EMINST data set (which input dimension is 20 times to output dimension) and MINST data set (which input dimension is 70 times to output dimension), we decide to decrease the number of genres even more.
+
+\subsection{Experiments with deleted data}
+Since we have reduced the data set, it is impossible to decrease the number of genres without deleting data. Therefore, we decide to use the top 10 genres in the data set. If a song is not belong to one of the top 10 genres, we will delete it from the data set. By constructing our data set in this way, we decreased the number of genres to 10 with saving most of the data.With all parameters unchanged, we implement our experiments again on the deleted data set.The results are shown as following:
+
+\begin{figure}[h]%
+\centering
+\subfigure[Error of Train]{%
+\label{fig:lr0.02}%
+\includegraphics[height=1.25in]{Figs/Ab_Train_error_plots_L2_N3.pdf}}%
+\subfigure[Accuracy of Train]{%
+\label{fig:lr0.04}%
+\includegraphics[height=1.25in]{Figs/Ab_Train_accuracy_plots_L2_N3.pdf}}%
+\qquad
+\subfigure[Error of Valid]{%
+\label{fig:lr0.06}%
+\includegraphics[height=1.25in]{Figs/Ab_Valid_error_plots_L2_N3.pdf}}%
+\subfigure[Accuracy of Valid]{%
+\label{fig:lr0.08}%
+\includegraphics[height=1.25in]{Figs/Ab_Valid_accuracy_plots_L2_N3.pdf}}%
+\qquad
+\caption{The error and accuracy curves of both training and validation sets with deleted data tested}
+\label{fig:deleteddata}
+\end{figure}
+
+As the Figure.\ref{fig:deleteddata} shown. The results are finally normal. The error on the training set keeps decreasing and the accuracy on the training set keeps increasing. Which indicates that our neural network model is working with the data set. Which means that our guessing before was right.
+
+However, the results also shows that the data set has another problem. As the error of the validation set keeps increasing rapidly, it is clear that our neural network overfitted to the training data very quickly. What is worse, from the accuracy of the validation set keeps shaking around rather than getting worse, it is clear that the inputs are not quite related to the outputs. In another word, the features in the metadata is not related to the genres of the songs.
+
+In conclusion, during our baseline experiments, we found that the features provided by the FMA project has no strong relationship with the genre of the song. What is worse, the features provided by FMA also have no relationship to time, which means it is hard for us to implement convolutional neural network on this data set. Therefore, we will implement our own music feature function to obtain the features from music files directly and re-implement our experiments with other neural network such as RNN, LSTM and 1-D convolutional neural network.
+
+\subsection{\#COPY THIS TO DATA PART\#}
+(Following I provided some data pre-processing information to you guys just in case you need it. DO copy it to the data part and use it as you like. DO rephrase it if it sounds weird, I didn't write this as formal form.)
+
+The data from FMA needs to be pre-processed. As mentioned before, it has four files in metadata part. They contain the data of tracks, genres, features and echonest. Since our goal in the baseline part is to verify the relationship between genres and features (we want to give the genres based on the melody of the songs), we do not need echonest file at this stage.
+
+To construct our training data, we first fetched the genres of each song. In the track file, some of the songs may have exact one genre, others may have more than one genres or no defined genre. Therefore, we add a new genre for those songs with more than one genre. (e.g. if a there is 168 different genres in total, one song has both genre 16 and 32. We will define a new genre named 169 and change all songs with both genre 16 and 32 to genre 169.) Which means our neural network will only be considered as correct if it predict all genres right. Then, since the genres are given by numbers defined online rather than ordered numbers (which means that the genre number is not consecutive), we went through the whole data set to reorder the genres of the songs. After that, with the proper ordered numbers, we implement the normalization on the input data set, which is the feature file. Finally, we compressed the whole data set to .npz format so that it can be used by our data providers.
+
+\newpage
 \section{Interim conclusions}
-
 
 \section{Plan}
 
