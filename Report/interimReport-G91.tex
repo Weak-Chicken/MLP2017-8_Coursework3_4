@@ -52,7 +52,8 @@
 %% You probably do not need to change anything above this comment
 
 %% REPLACE this with your student number
-\def\studentNumber{s1738623, sXXXXXXX, sXXXXXXX}
+\def\studentNumber{s1738623, s1773940, s1771076}
+\def\mathbi#1{\textbf{\em #1}}
 
 \begin{document} 
 
@@ -70,11 +71,13 @@ The abstract should be 100--200 words long,  providing a concise summary of the 
 
 \section{Introduction}
 \label{sec:intro}
-Machine learning is … 
+Classification is the approach, which identities different subjects to specific categories, having a wide application. There are many applications based on classification like filtering the spam emails, cancer identification etc. Solving classification problems is worthy in many aspects.
 
-Deep learning(DL) is a subset of machine learning and there are three main types of learning: supervised, semi-supervised and unsupervised. In a deep learning model, there are multiple layers each of whose input is from the former layer’s output. Many of current deep learning models are based on Artificial neural network (ANN) which includes deep neural networks (DNNs). A deep neural network contains many hidden layers between the input layers and output layers. One of advantages of DNNs is the ability of finding non-linear relationships which are often complex. Besides DNN, there are some other deep learning algorithms, such as Recurrent neural networks (RNNs) and Convolutional deep neural networks (CNNs). RNNs allows data going in any direction and are mainly used as language model. CNNs are mainly used in computer vision domain.
+As a approach of solving classification problems, machine learning (ML) can lead to a good classification result after training relative data sets in a proper way. Most of the machine learning classification methods are belong to supervised learning which uses labeled data as training data. As one of the most important machine learning method, neural network (NN) outperforms than many approaches in the early time. However, neural network using gradient descent in backpropagation may suffers from the gradients vanish after increasing the number of layers. This problems were solved by \cite{hinton2006reducing} and deep learning, a kind of multi-layer NN, became popular since then.
 
-Music information retrieval(MIR), as a branch of information retrieval(IR), is the science of retrieving information from music. There are many developed IR application in the world, for example, the text information retrieval from search engine. Unlike text information retrieval, MIR research is still not much due to many reasons. One of the reason above is MIR often requires a comprehensive background in music, psychology, machine learning etc. Another reason is the lack of numbers of large, complete and available datasets. \cite{fma}.
+Deep learning(DL) is a subset of machine learning and there are three main types of learning. In a deep learning model, there are multiple layers each of whose input is from the former layer's output. Many of current deep learning models are based on Artificial neural network (ANN) which includes deep neural networks (DNNs). A deep neural network contains many hidden layers between the input layers and output layers. One of advantages of DNNs is the ability of finding non-linear relationships which are often complex. Besides DNN, there are some other deep learning algorithms, such as Recurrent neural networks (RNNs) and Convolutional deep neural networks (CNNs). RNNs allows data going in any direction and are mainly used as language model. CNNs are mainly used in computer vision domain.
+
+Music information retrieval(MIR), as a branch of information retrieval(IR), is the science of retrieving information from music. There are many developed IR application in the world, for example, the text information retrieval from search engine. Unlike text information retrieval, MIR research is still not much due to many reasons. One of the reason above is MIR often requires a comprehensive background in music, psychology, machine learning etc. Another reason is the lack of numbers of large, complete and available datasets. \cite{fma}. MIR is being used widely, such as recommender systems, track separation and instrument recognition, automatic music transcription, automatic categorization, music generation etc. In this project, we are doing classification (automatic categorization).
 
 In the rest of the report, there are mainly eight sections. Motivation, research questions and objectives will be stated in section 2 to 4 respectively. Section 5 is  a brief introduction on FMA datasets. In methodology part (section 6), a concise conclusion of machine learning practical will be given and some novel knowledge used in our experiment will be introduced as well.  After experiments part, there is  a interim conclusion containing results analysis. At the last, future plan of the project is pointed out.
 
@@ -83,13 +86,15 @@ Machine learning performs good at classification, and deep learning often has a 
 
 Besides deep learning or machine learning, music, which is a natural habit of human, has a remarkable potential market to be explored. For example, a good music classification can bring clear learning schedules for new learner. Also, music recommend systems based on personal preference will be popular because of the increasing cognition of self-value. 
 
-Therefore, in this report, our motivation is to find an approach based on deep learning to classify the music well. Besides that, we also want to find some other classification models and make some comparison. All the experiments are based on FMA datasets and classification accuracy is the evaluation of models.
+Therefore, in this report, our main motivation is to find an approach based on deep learning to classify the music. However, unlike text classification based on words or image classification based on image values, music classification based on data transformed from audio contains more uncertain relationship. For example, it is clear that image values represents the color, shapes and other information of each image, so it will be certainly able to classify other images by this kind of value. However, after transforming the audio to data by one method, it is not certain to say that the transformed data contains enough information of the music to do the classification. Therefore, besides building a deep learning architecture for classification, we also need to verify the relationship between transformed data (provided by dataset) and the music categories. All the experiments are based on FMA datasets and classification accuracy is the evaluation of models.\citep{fma}
 
 
 \section{Research questions} 
 Unlike the wealth of other information retrieval, lacking large, complete and available datasets for MIR makes MIR research develop slow. Except for FMA dataset, other existing datasets for MIR are either in small scale or not complete. 
 For example, despite containing 2524739 clips, the dataset named AcousticBrainz has no information on artists or audios. Dataset called Unique provides a more complete information, but its capacity(3115 clips) is far away from the FMA(106547 clips). \cite{fma}
 
+\begin{table}[h!]
+\centering
 \begin{tabular}{*{5}{c}} \hline
 dataset & clips & artists & year & audio \\ \hline
 RWC & 465 & $-$ & 2001 & yes \\
@@ -115,15 +120,17 @@ MSD& 1000000 & 44745 & 2011 & no \\
 AudioSet& 2084320 & $-$ & 2017 & no \\
 AcousticBrainz& 2524739 & $-$ & 2017 & no \\ 
 \end{tabular}
+\caption{Information on different datasets \citep{fma}}
+\label{table:1}
+\end{table}
 
-A complete, large dataset containing more information may reveal better relationships between data by fitting them into deep networks. Therefore, our project, which is based on FMA, aims at build MIR classification models in a new, better data environment than before. Also, in order to find a suitable model, we build different models and compare them by their accuracy. Although FMA, which contains both text and audio information both, provides a good audio resource, we still want to explore the text information in this report. The reason for this is mainly about the casual habits that ordinary people often are used to classify the types of music by artists, albums and others belonging to text information. Therefore, we really want to figure out one or several models classifying the music type based on these text characters.
+Usually, a complete and large dataset containing more information may reveal better relationships between data by fitting them into deep networks. Therefore, compared to most of the music classification based on old datasets, our project aims at building classification model based on this new dataset. Unlike many music classification based on non-musical information like artist's name, we use the given feature extracted from audio as training data. Besides these, as mentioned before, we also want to explore the relationship between given data and categories in order to verify if the given data contains enough information of the ordinary audio. 
 
+TBA(some existing projects)
 
 
 \section{Objectives}
 In this interim report, we mainly illustrate the relationship among the machine learning, deep learning and music information retrieval. After a comprehensive research, we have found some problems leading to several worthy research points. As the priority, we want to build a classification based on DNNs by using the FMA dataset. Besides that, there are two optional goals as well. One is finding more suitable classification models based on the FMA dataset, such as RNNs etc. The other one is trying to build a recommending model based on our classification results.
-
-
 
 
 \section{Data}
@@ -133,8 +140,32 @@ In this report, as a mid-term report, our work is mainly about the classificatio
 
 
 \section{Methodology}
+\subsection{DNN}
+DNN has attracted a vast of attention due to it powerful ability on solving different kinds of machine learning problems, including music classification \cite{dai2015multilingual}. With an input layer, several hidden layers and an output layer, DNN takes data into the input layer and propagate it to hidden layers, where we use sigmoid function as activation function.
+\begin{equation}
+	h_ j (x) =  \frac{\mathrm{1} }{\mathrm{1} + e^{- \mathbi{W}^\top \mathbi{x} + \mathbi{b} }}
+\end{equation}
+Described in Eq.(2), sigmoid function provides a reasonable gradient when processing gradient descent to train the model in a classification problem. In the output layer we use softmax function as activation function instead, since it is the commonly used for multi-type classification. 
 
-\newpage
+Although Convolution neural network (CNN) is a more effective network for complex problem, it does not perform well with the dataset we introduced above, because the features.csv contains different kinds of characters of the audio data such bandwidth, energy, frequency distribution, etc., which are measured in different measurements. Unlike image processing, taking the density of pixels as input, when we use different kinds of features as input to a CNN, it resulted in unreasonable prediction on the test set after training. It may be feasible to process a CNN with the original audio data, consisting of huge amounts of features in the same units so one of the further plan is to improve the performance of song classification using CNN based on original audio features. As for the baseline, handling the millions of original audio data is a complicated task and an efficient way needs to be designed carefully so we shelve it temporarily. 
+
+\subsection{Softmax}
+Softmax function is commonly used in the classification problems with more than two possible classes. In this model, because there are more than two genres of music in our dataset, we use softmax function as activation function in the output layer, giving the expression as below:
+\begin{equation}
+	\mathrm{softmax}(\mathbi{z})_i=\frac{e^{z_i}}{\sum_j e^{z_j}},
+\end{equation}
+
+where $i$ is the index of the genre we supposed to predict, and the denominator normalizes the probability distribution. The softmax function exponentiates the value of the linear transformation of the input, which is obtained from the last hidden layer, and then normalizes it to get ${p(y=y_i|\mathbi{x})}$. Assuming we have 10 genres to be classified, then we will get a 10-dimensional vector y consisting of the probabilities of $p(y=y_j|\mathbi{x})$, where $j$ is the index of any possible genres. The output genre with highest probability will be compared with the target genre through cross-entropy function during the training time.
+
+\subsection{Adam optimization}
+As stochastic gradient descent (SGD) has become a most famous optimization method in traditional machine learning \cite{kingma2014adam}, several deep learning experiments for different applications also achieve great success with SGD \cite{deng2013recent, krizhevsky2012imagenet, hinton2006reducing, hinton2012improving, graves2013speech}. However, SGD might slow down and get involved into a complicated route when the objective function contains data subsampling and some kinds of noise sources such as dropout regularization. \cite{hinton2006reducing, kingma2014adam}. Therefore, more efficient optimizations need to be implemented to speed up the gradient descend processing in the specific cases. In this model, we adopt Adam, which combines the advantages of AdaGrad \cite {duchi2011adaptive} and RMSProp \cite{tieleman2012lecture}, to improve the computation efficiency. In addition to the good performance on sparse data and non-stationary settings, Adam updates the weights in the network within a bounded variation so the algorithm could find the optima. The algorithms of Adam could be formally described using the following equations:
+\begin{eqnarray}
+	M_i(t)=\alpha M_i(t-1)+(1-\alpha)g_i(t) \\
+    S_i(t)=\beta S_i(t-1)+(1-\beta)g_i(t)^2 \\
+    \Delta w_i(t)=\frac{-\eta}{\sqrt{S_i(t)}+\epsilon}M_i(t)
+\end{eqnarray}
+Mostly, the parameter variation was constrained below the stepsize $\alpha$, which could be understand as ignoring the observed gradient $g$, if $g$ is much farther than that the current weight values. Furthermore, Adam provides a efficient optimization using less memory than normal SGD methods.
+
 \section{Experiments}
 After the data pre-processing, we started to implement our baseline experiments. Our main idea is to test the data set with some normal deep neural networks (DNN) we have built during coursework 1 and 2. The reason why we choose only DNN to perform our baseline experiments is  that DNN has been well tested and understood by all of us. Meanwhile, we are not familiar with the data set. If there are some unexpected errors in the results, we can focus on solving the data set problems rather than worrying about both neural network problems and data set problems.
 
@@ -256,11 +287,10 @@ The data from FMA needs to be pre-processed. As mentioned before, it has four fi
 
 To construct our training data, we first fetched the genres of each song. In the track file, some of the songs may have exact one genre, others may have more than one genres or no defined genre. Therefore, we add a new genre for those songs with more than one genre. (e.g. if a there is 168 different genres in total, one song has both genre 16 and 32. We will define a new genre named 169 and change all songs with both genre 16 and 32 to genre 169.) Which means our neural network will only be considered as correct if it predict all genres right. Then, since the genres are given by numbers defined online rather than ordered numbers (which means that the genre number is not consecutive), we went through the whole data set to reorder the genres of the songs. After that, with the proper ordered numbers, we implement the normalization on the input data set, which is the feature file. Finally, we compressed the whole data set to .npz format so that it can be used by our data providers.
 
-\newpage
 \section{Interim conclusions}
 
 \section{Plan}
-
+Based on a baseline model, after analyzing the data and the result, we have following optional plans in the future. First, due to the incompleteness of given data, we are planning to extract audio's new features by ourselves. The extracting method may be some mature method such as MFCC. Second, we want to try to build new models like LSTM, CNN and RNN. Third, if possible, a music recommend system based on deep learning is also a potential choice for us. Besides these, optimization for parts of or whole project will be done depending on relative condition. 
 
 \bibliography{ref}
 
