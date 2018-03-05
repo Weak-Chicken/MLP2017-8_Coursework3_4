@@ -1,0 +1,102 @@
+\begin{thebibliography}{14}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Defferrard et~al.(2017)Defferrard, Benzi, Vandergheynst, and
+  Bresson]{fma}
+Defferrard, Micha{\"e}l, Benzi, Kirell, Vandergheynst, Pierre, and Bresson,
+  Xavier.
+\newblock Fma: A dataset for music analysis.
+\newblock In \emph{18th International Society for Music Information Retrieval
+  Conference}, 2017.
+
+\bibitem[Deng et~al.(2013)Deng, Li, Huang, Yao, Yu, Seide, Seltzer, Zweig, He,
+  Williams, et~al.]{deng2013recent}
+Deng, Li, Li, Jinyu, Huang, Jui-Ting, Yao, Kaisheng, Yu, Dong, Seide, Frank,
+  Seltzer, Michael, Zweig, Geoff, He, Xiaodong, Williams, Jason, et~al.
+\newblock Recent advances in deep learning for speech research at microsoft.
+\newblock In \emph{Acoustics, Speech and Signal Processing (ICASSP), 2013 IEEE
+  International Conference on}, pp.\  8604--8608. IEEE, 2013.
+
+\bibitem[Duchi et~al.(2011)Duchi, Hazan, and Singer]{duchi2011adaptive}
+Duchi, John, Hazan, Elad, and Singer, Yoram.
+\newblock Adaptive subgradient methods for online learning and stochastic
+  optimization.
+\newblock \emph{Journal of Machine Learning Research}, 12\penalty0
+  (Jul):\penalty0 2121--2159, 2011.
+
+\bibitem[Graves et~al.(2013)Graves, Mohamed, and Hinton]{graves2013speech}
+Graves, Alex, Mohamed, Abdel-rahman, and Hinton, Geoffrey.
+\newblock Speech recognition with deep recurrent neural networks.
+\newblock In \emph{Acoustics, speech and signal processing (icassp), 2013 ieee
+  international conference on}, pp.\  6645--6649. IEEE, 2013.
+
+\bibitem[Hinton \& Salakhutdinov(2006)Hinton and
+  Salakhutdinov]{hinton2006reducing}
+Hinton, Geoffrey~E and Salakhutdinov, Ruslan~R.
+\newblock Reducing the dimensionality of data with neural networks.
+\newblock \emph{science}, 313\penalty0 (5786):\penalty0 504--507, 2006.
+
+\bibitem[Hinton et~al.(2012)Hinton, Srivastava, Krizhevsky, Sutskever, and
+  Salakhutdinov]{hinton2012improving}
+Hinton, Geoffrey~E, Srivastava, Nitish, Krizhevsky, Alex, Sutskever, Ilya, and
+  Salakhutdinov, Ruslan~R.
+\newblock Improving neural networks by preventing co-adaptation of feature
+  detectors.
+\newblock \emph{arXiv preprint arXiv:1207.0580}, 2012.
+
+\bibitem[Kingma \& Ba(2014)Kingma and Ba]{kingma2014adam}
+Kingma, Diederik and Ba, Jimmy.
+\newblock Adam: A method for stochastic optimization.
+\newblock \emph{arXiv preprint arXiv:1412.6980}, 2014.
+
+\bibitem[Krizhevsky et~al.(2012)Krizhevsky, Sutskever, and
+  Hinton]{krizhevsky2012imagenet}
+Krizhevsky, Alex, Sutskever, Ilya, and Hinton, Geoffrey~E.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock In \emph{Advances in neural information processing systems}, pp.\
+  1097--1105, 2012.
+
+\bibitem[Lawrence et~al.(1997)Lawrence, Giles, Tsoi, and
+  Back]{lawrence1997face}
+Lawrence, Steve, Giles, C~Lee, Tsoi, Ah~Chung, and Back, Andrew~D.
+\newblock Face recognition: A convolutional neural-network approach.
+\newblock \emph{IEEE transactions on neural networks}, 8\penalty0 (1):\penalty0
+  98--113, 1997.
+
+\bibitem[Medsker \& Jain(2001)Medsker and Jain]{medsker2001recurrent}
+Medsker, LR and Jain, LC.
+\newblock Recurrent neural networks.
+\newblock \emph{Design and Applications}, 5, 2001.
+
+\bibitem[Rabiner \& Juang(1993)Rabiner and Juang]{rabiner1993fundamentals}
+Rabiner, Lawrence~R and Juang, Biing-Hwang.
+\newblock \emph{Fundamentals of speech recognition}, volume~14.
+\newblock PTR Prentice Hall Englewood Cliffs, 1993.
+
+\bibitem[Srivastava et~al.(2014)Srivastava, Hinton, Krizhevsky, Sutskever, and
+  Salakhutdinov]{srivastava2014dropout}
+Srivastava, Nitish, Hinton, Geoffrey~E, Krizhevsky, Alex, Sutskever, Ilya, and
+  Salakhutdinov, Ruslan.
+\newblock Dropout: a simple way to prevent neural networks from overfitting.
+\newblock \emph{Journal of machine learning research}, 15\penalty0
+  (1):\penalty0 1929--1958, 2014.
+
+\bibitem[Sundermeyer et~al.(2012)Sundermeyer, Schl{\"u}ter, and
+  Ney]{sundermeyer2012lstm}
+Sundermeyer, Martin, Schl{\"u}ter, Ralf, and Ney, Hermann.
+\newblock Lstm neural networks for language modeling.
+\newblock In \emph{Thirteenth Annual Conference of the International Speech
+  Communication Association}, 2012.
+
+\bibitem[Tieleman \& Hinton(2012)Tieleman and Hinton]{tieleman2012lecture}
+Tieleman, Tijmen and Hinton, Geoffrey.
+\newblock Lecture 6.5-rmsprop: Divide the gradient by a running average of its
+  recent magnitude.
+\newblock \emph{COURSERA: Neural networks for machine learning}, 4\penalty0
+  (2):\penalty0 26--31, 2012.
+
+\end{thebibliography}
