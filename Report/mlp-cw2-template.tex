@@ -1,0 +1,178 @@
+%% Template for MLP Coursework 3 / 18 Feb 2018 
+
+%% Based on  LaTeX template for ICML 2017 - example_paper.tex at 
+%%  https://2017.icml.cc/Conferences/2017/StyleAuthorInstructions
+
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{amssymb,amsmath}
+\usepackage{txfonts}
+\usepackage{microtype}
+
+% For figures
+\usepackage{graphicx}
+\usepackage{subfigure} 
+
+% For citations
+\usepackage{natbib}
+
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% the hyperref package is used to produce hyperlinks in the
+% resulting PDF.  If this breaks your system, please commend out the
+% following usepackage line and replace \usepackage{mlp2017} with
+% \usepackage[nohyperref]{mlp2017} below.
+\usepackage{hyperref}
+\usepackage{url}
+\urlstyle{same}
+
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+
+% Set up MLP coursework style (based on ICML style)
+\usepackage{mlp2017}
+\mlptitlerunning{MLP Coursework 3 (\studentNumber)}
+\bibliographystyle{icml2017}
+
+
+\DeclareMathOperator{\softmax}{softmax}
+\DeclareMathOperator{\sigmoid}{sigmoid}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\relu}{relu}
+\DeclareMathOperator{\lrelu}{lrelu}
+\DeclareMathOperator{\elu}{elu}
+\DeclareMathOperator{\selu}{selu}
+\DeclareMathOperator{\maxout}{maxout}
+
+%% You probably do not need to change anything above this comment
+
+%% REPLACE this with your student number
+\def\studentNumber{sXXXXXXX}
+
+\begin{document} 
+
+\twocolumn[
+\mlptitle{MLP Coursework 3: Deep Networks Music Classification Based on FMA}
+
+\centerline{\studentNumber, \studentNumber,\studentNumber}
+
+\vskip 7mm
+]
+
+\begin{abstract} 
+The abstract should be 100--200 words long,  providing a concise summary of the contents of your report.
+\end{abstract} 
+
+\section{Introduction}
+\label{sec:intro}
+Classification is the approach, which identities different subjects to specific categories, having a wide application. There are many applications based on classification like filtering the spam emails, cancer identification etc. Solving classification problems is worthy in many aspects.
+
+As a approach of solving classification problems, machine learning (ML) can lead to a good classification result after training relative data sets in a proper way. Most of the machine learning classification methods are belong to supervised learning which uses labeled data as training data. As one of the most important machine learning method, neural network (NN) outperforms than many approaches in the early time. However, neural network using gradient descent in backpropagation may suffers from the gradients vanish after increasing the number of layers. This problems were solved by \cite{hinton2006reducing} and deep learning, a kind of multi-layer NN, became popular since then.
+
+Deep learning(DL) is a subset of machine learning and there are three main types of learning. In a deep learning model, there are multiple layers each of whose input is from the former layer's output. Many of current deep learning models are based on Artificial neural network (ANN) which includes deep neural networks (DNNs). A deep neural network contains many hidden layers between the input layers and output layers. One of advantages of DNNs is the ability of finding non-linear relationships which are often complex. Besides DNN, there are some other deep learning algorithms, such as Recurrent neural networks (RNNs) and Convolutional deep neural networks (CNNs). RNNs allows data going in any direction and are mainly used as language model. CNNs are mainly used in computer vision domain.
+
+Music information retrieval(MIR), as a branch of information retrieval(IR), is the science of retrieving information from music. There are many developed IR application in the world, for example, the text information retrieval from search engine. Unlike text information retrieval, MIR research is still not much due to many reasons. One of the reason above is MIR often requires a comprehensive background in music, psychology, machine learning etc. Another reason is the lack of numbers of large, complete and available datasets. \cite{fma}. MIR is being used widely, such as recommender systems, track separation and instrument recognition, automatic music transcription, automatic categorization, music generation etc. In this project, we are doing classification (automatic categorization).
+
+In the rest of the report, there are mainly eight sections. Motivation, research questions and objectives will be stated in section 2 to 4 respectively. Section 5 is  a brief introduction on FMA datasets. In methodology part (section 6), a concise conclusion of machine learning practical will be given and some novel knowledge used in our experiment will be introduced as well.  After experiments part, there is  a interim conclusion containing results analysis. At the last, future plan of the project is pointed out.
+
+\section{Motivation}
+Machine learning performs good at classification, and deep learning often has a better performance on finding non-linear relationships. Music is a kind of thing containing a lot of information which is hard to find the relative relationships inside. Therefore, compared other methods, machine learning, especially deep learning, is a suitable approach to deal with music issues. 
+
+Besides deep learning or machine learning, music, which is a natural habit of human, has a remarkable potential market to be explored. For example, a good music classification can bring clear learning schedules for new learner. Also, music recommend systems based on personal preference will be popular because of the increasing cognition of self-value. 
+
+Therefore, in this report, our main motivation is to find an approach based on deep learning to classify the music. However, unlike text classification based on words or image classification based on image values, music classification based on data transformed from audio contains more uncertain relationship. For example, it is clear that image values represents the color, shapes and other information of each image, so it will be certainly able to classify other images by this kind of value. However, after transforming the audio to data by one method, it is not certain to say that the transformed data contains enough information of the music to do the classification. Therefore, besides building a deep learning architecture for classification, we also need to verify the relationship between transformed data (provided by dataset) and the music categories. All the experiments are based on FMA datasets and classification accuracy is the evaluation of models.\citep{fma}
+
+
+\section{Research questions} 
+Unlike the wealth of other information retrieval, lacking large, complete and available datasets for MIR makes MIR research develop slow. Except for FMA dataset, other existing datasets for MIR are either in small scale or not complete. 
+For example, despite containing 2524739 clips, the dataset named AcousticBrainz has no information on artists or audios. Dataset called Unique provides a more complete information, but its capacity(3115 clips) is far away from the FMA(106547 clips). \cite{fma}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{*{5}{c}} \hline
+dataset & clips & artists & year & audio \\ \hline
+RWC & 465 & $-$ & 2001 & yes \\
+CAL500 & 500 & 500 & 2007 & yes \\
+Ballroom&  698& $-$ & 2004 & yes \\
+GTZAN&  1000& 300 & 2002 & yes \\
+MusiClef&  1355&  218 & 2012 & yes \\
+Artist20&  1413& 20 &  2007&  yes \\
+ISMIR2004&  1458 &  $-$ & 2004 & yes  \\
+Homburg& 1886 & 1463 & 2005 & yes \\
+103-Artists & 2445 & 103 & 2005 & yes \\  
+Unique& 3115 & 3115 & 2010 & yes \\
+1517-Artists& 3180 & 1517 & 2008 & yes \\
+LMD& 3227 & $-$ & 2007 & no \\
+EBallroom& 4180 & $-$ & 2016 & no\\ 
+USPOP&8752  & 400 & 2003 & no \\
+CAL10k& 10271 & 4597 & 2010 & no \\
+MagnaTagATune& 25863 & 230 & 2009 & yes \\
+Codaich& 26420 & 1941 & 2006 & no \\
+FMA& 106574 & 16341 & 2017 & yes \\
+OMRAS2 & 152410 & 6938 & 2009 & no \\
+MSD& 1000000 & 44745 & 2011 & no \\
+AudioSet& 2084320 & $-$ & 2017 & no \\
+AcousticBrainz& 2524739 & $-$ & 2017 & no \\ 
+\end{tabular}
+\caption{Information on different datasets \citep{fma}}
+\label{table:1}
+\end{table}
+
+Usually, a complete and large dataset containing more information may reveal better relationships between data by fitting them into deep networks. Therefore, compared to most of the music classification based on old datasets, our project aims at building classification model based on this new dataset. Unlike many music classification based on non-musical information like artist's name, we use the given feature extracted from audio as training data. Besides these, as mentioned before, we also want to explore the relationship between given data and categories in order to verify if the given data contains enough information of the ordinary audio. 
+
+TBA(some existing projects)
+
+\section{Objectives}
+In this interim report, we illustrate the relationship among the machine learning, deep learning and music information retrieval. After a comprehensive research, we have found some problems leading to several worthy research points. For example, we choose training data extracted from music. FIrst, we build a classification based on DNNs by using the FMA dataset. The second objective is that if the model performed not well, we will check the model by running it on other dataset such as EMINST. After cheching the model, because the feature data is provided by dataset containing 9 methods in total, our third purpose is verifying if the given data is suitable to representing the audio information.
+
+YUHAN:
+Some optimization are also added on our model, such as drop out etc.
+
+
+
+
+\section{Data}
+\subsection{FMA Dataset}
+The dataset in our experiment is called Free Music Archive (FMA). It is a dataset opening for free and suitable for evaluating various MIR tasks. FMA dataset contains both texture and audio content inside. For texture content (named in metadata folder) encoded as csv format, there are four documents recording different information: tracks, genres, features and echonest. For audio content encoded as mp3 format, there are four different size of packages, which contains 8000 tracks in 30s (7.2GiB), 25000 tracks in 30s (22GiB), 106574 tracks in 30s (93GiB) and 106574 tracks untrimmed (879GiB) respectively. 
+
+In this report, as a mid-term report, our work is mainly about the classification issues. Although we want to used the tags containing artist name, album names, produced date etc. as training data, it is impossible to achieve it because we can just extract no more than 10 these kind of tags. Therefore, we choose to used the data from the given file named feature.csv. Document feature.csv contains the pre-computed data by 9 methods: Chroma, Tonnetz, MFCC, Spec. centroid, Spec. bandwidth, Spec. contrast, Spec. rolloff, RMS energy and Zero-crossing rate. All the information is written into the document in 518 dimensions.
+
+\subsection{Data Pre-processing}
+
+The data from FMA needs to be pre-processed. As mentioned before, it has four files in metadata part. They contain the data of tracks, genres, features and echonest. Since our goal in the baseline part is to verify the relationship between genres and features (we want to give the genres based on the melody of the songs), we do not need echonest file at this stage.
+
+To construct our training data, we first fetched the genres of each song. In the track file, some of the songs may have exact one genre, others may have more than one genres or no defined genre. Therefore, we add a new genre for those songs with more than one genre. (e.g. if a there is 168 different genres in total, one song has both genre 16 and 32. We will define a new genre named 169 and change all songs with both genre 16 and 32 to genre 169.) Which means our neural network will only be considered as correct if it predict all genres right. Then, since the genres are given by numbers defined online rather than ordered numbers (which means that the genre number is not consecutive), we went through the whole data set to reorder the genres of the songs. After that, with the proper ordered numbers, we implement the normalization on the input data set, which is the feature file. Finally, we compressed the whole data set to .npz format so that it can be used by our data providers.
+
+\section{Methodology}
+
+
+\section{Experiments}
+
+
+\section{Interim conclusions}
+
+
+\section{Plan}
+Based on a baseline model, after analyzing the data and the result, we have following optional plans in the future. First, due to the incompleteness of given data, we are planning to extract audio's new features by ourselves. The extracting method may be some mature method such as MFCC. Second, we want to try to build new models like LSTM, CNN and RNN. Third, if possible, a music recommend system based on deep learning is also a potential choice for us. Besides these, optimization for parts of or whole project will be done depending on relative condition. 
+
+
+\bibliography{ref}
+
+\end{document} 
+
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This version was
+% created by Lise Getoor and Tobias Scheffer, it was slightly modified  
+% from the 2010 version by Thorsten Joachims & Johannes Fuernkranz, 
+% slightly modified from the 2009 version by Kiri Wagstaff and 
+% Sam Roweis's 2008 version, which is slightly modified from 
+% Prasad Tadepalli's 2007 version which is a lightly 
+% changed version of the previous year's version by Andrew Moore, 
+% which was in turn edited from those of Kristian Kersting and 
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.  
