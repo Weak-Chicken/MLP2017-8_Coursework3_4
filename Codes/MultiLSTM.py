@@ -1,3 +1,11 @@
+############################################################
+#   By Michael
+#   Multi layers LSTM
+#   set parameters/ hyper-parameters inside
+#   data set is MNIST 
+#   final accuracy reached at around 0.97 which is almost as same as another project
+#   So, code should be fine. 
+############################################################
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
