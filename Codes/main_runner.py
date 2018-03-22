@@ -38,29 +38,42 @@ from data_providers import FMADataProvider
 from data_providers import DEFAULT_SEED
 from data_providers import FMADataProvider_Reduced
 from data_providers import FMADataProvider_Abandoned
+from data_providers import MFCCDataProvider
 from architecture_builders import DNNBuilder
+from architecture_builders import Conv1dBuilder
 from utils.storage import build_experiment_folder, save_statistics
 
 batch_size = 50
-# input_dim = 518
-# target_dim = 236
-input_dim = 28 * 28
-target_dim = 47
-epochs = 100
+input_dim = 36374
+input_dim_1 = 13
+input_dim_2 = 2798
+target_dim = 8
+# input_dim = 28 * 28
+# target_dim = 47
+epochs = 60
 
 rng = np.random.RandomState(seed=DEFAULT_SEED)
 
 # train_data = FMADataProvider(number_of_class=4858, which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 # valid_data = FMADataProvider(number_of_class=4858, which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
+
 # train_data = FMADataProvider_Reduced(number_of_class=236, which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 # valid_data = FMADataProvider_Reduced(number_of_class=236, which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
+
 # train_data = FMADataProvider_Abandoned(number_of_class=10, which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 # valid_data = FMADataProvider_Abandoned(number_of_class=10, which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
-train_data = EMNISTDataProvider(which_set='train', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
-valid_data = EMNISTDataProvider(which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
-test_data = EMNISTDataProvider(which_set='test', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
 
-X = tf.placeholder("float", [None, input_dim])  # batch_size by input data (batch size not yet determined)
+# train_data = EMNISTDataProvider(which_set='train', batch_size=batch_size, flatten=False, one_hot=True, rng=rng)
+# valid_data = EMNISTDataProvider(which_set='valid', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
+# test_data = EMNISTDataProvider(which_set='test', batch_size=batch_size, flatten=True, one_hot=True, rng=rng)
+
+train_data = MFCCDataProvider(track_num=1, which_set='train', batch_size=batch_size, flatten=False, one_hot=True, rng=rng)
+valid_data = MFCCDataProvider(track_num=1, which_set='valid', batch_size=batch_size, flatten=False, one_hot=True, rng=rng)
+
+# X = tf.placeholder("float", [None, input_dim])  # batch_size by input data (batch size not yet determined)
+# Y = tf.placeholder("float", [None, target_dim])  # batch_size by output data (batch size not yet determined)
+
+X = tf.placeholder("float", [None, input_dim_1, input_dim_2])  # batch_size by input data (batch size not yet determined)
 Y = tf.placeholder("float", [None, target_dim])  # batch_size by output data (batch size not yet determined)
 training_bool = tf.placeholder(tf.bool)
 dropout_rate = tf.placeholder("float")
@@ -72,19 +85,22 @@ ERR = np.zeros(epochs)
 predict_ACC = np.zeros(epochs)
 predict_ERR = np.zeros(epochs)
 
-layers = [2]
-neurons = [200]
+layers = [2, 3]
+neurons = [400, 600, 800]
+number_features = [64, 128, 256]
 
 # layers = [0]
 # neurons = [0]
 
 for layer in layers:
     for neuron_num in neurons:
-        test = DNNBuilder(batch_size, layer , neuron_num, 'DNN_L{}_N{}'.format(layer,neuron_num), target_dim, batch_norm_use=True)
+        # test = DNNBuilder(batch_size, layer , neuron_num, 'DNN_L{}_N{}'.format(layer,neuron_num), target_dim, batch_norm_use=True)
+        test = Conv1dBuilder(batch_size, layer, 'Conv1d_L{}_N{}'.format(layer,neuron_num), target_dim, number_features=number_features,
+                 stride=4, batch_norm_use=False, strided_dim_reduction=True)
         predict_op = test(output, training_bool, dropout_rate)
 
         cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict_op, labels=Y))
-        train_op = tf.train.AdamOptimizer(learning_rate=0.002).minimize(cost)
+        train_op = tf.train.AdamOptimizer(learning_rate=0.00001).minimize(cost)
         # train_op = tf.train.GradientDescentOptimizer(0.000005).minimize(cost)
 
         per_datapoint_pred_is_correct = tf.equal(tf.argmax(predict_op, 1), tf.argmax(Y, 1))

@@ -9,6 +9,9 @@ import FMA_utils as utils
 TRAIN_RATIO = 0.8
 VALID_RATIO = 0.1
 TEST_RATIO = 0.1
+# PATH = 'data/' # Path with FMA
+PATH = 'D:/MLP_DATA/'
+
 
 class DataFormatter(object):
     def __init__(self, path):
@@ -89,9 +92,9 @@ def FMA_genres(tracks, genres, features, echonest):
     train_inputs, valid_inputs, test_inputs = cutting_datasets(combined_set_inputs)
     train_targets, valid_targets, test_targets = cutting_datasets(combined_set_targets)
 
-    np.savez(Path + 'FMA_feature-genre-train.npz', inputs=train_inputs, targets=train_targets)
-    np.savez(Path + 'FMA_feature-genre-valid.npz', inputs=valid_inputs, targets=valid_targets)
-    np.savez(Path + 'FMA_feature-genre-test.npz', inputs=test_inputs, targets=test_targets)
+    np.savez(PATH + 'FMA_feature-genre-train.npz', inputs=train_inputs, targets=train_targets)
+    np.savez(PATH + 'FMA_feature-genre-valid.npz', inputs=valid_inputs, targets=valid_targets)
+    np.savez(PATH + 'FMA_feature-genre-test.npz', inputs=test_inputs, targets=test_targets)
 
 
 def FMA_reduce_genres(tracks, genres, features, echonest):
@@ -126,13 +129,13 @@ def FMA_reduce_genres(tracks, genres, features, echonest):
     train_inputs, valid_inputs, test_inputs = cutting_datasets(combined_set_inputs)
     train_targets, valid_targets, test_targets = cutting_datasets(combined_set_targets)
 
-    np.savez(Path + 'FMA_feature-genre-reduced-train.npz', inputs=train_inputs, targets=train_targets)
-    np.savez(Path + 'FMA_feature-genre-reduced-valid.npz', inputs=valid_inputs, targets=valid_targets)
-    np.savez(Path + 'FMA_feature-genre-reduced-test.npz', inputs=test_inputs, targets=test_targets)
+    np.savez(PATH + 'FMA_feature-genre-reduced-train.npz', inputs=train_inputs, targets=train_targets)
+    np.savez(PATH + 'FMA_feature-genre-reduced-valid.npz', inputs=valid_inputs, targets=valid_targets)
+    np.savez(PATH + 'FMA_feature-genre-reduced-test.npz', inputs=test_inputs, targets=test_targets)
 
 
 def FMA_abandoned_genres(tracks, genres, features, echonest, keep_feature_number):
-    #i =
+    #i = 10
     corr_table = {}
     i = 0
     for index, row in genres.iterrows():
@@ -194,18 +197,48 @@ def FMA_abandoned_genres(tracks, genres, features, echonest, keep_feature_number
     train_inputs, valid_inputs, test_inputs = cutting_datasets(combined_set_inputs)
     train_targets, valid_targets, test_targets = cutting_datasets(combined_set_targets)
 
-    np.savez(Path + 'FMA_feature-genre-abandoned-train.npz', inputs=train_inputs, targets=train_targets)
-    np.savez(Path + 'FMA_feature-genre-abandoned-valid.npz', inputs=valid_inputs, targets=valid_targets)
-    np.savez(Path + 'FMA_feature-genre-abandoned-test.npz', inputs=test_inputs, targets=test_targets)
+    np.savez(PATH + 'FMA_feature-genre-abandoned-train.npz', inputs=train_inputs, targets=train_targets)
+    np.savez(PATH + 'FMA_feature-genre-abandoned-valid.npz', inputs=valid_inputs, targets=valid_targets)
+    np.savez(PATH + 'FMA_feature-genre-abandoned-test.npz', inputs=test_inputs, targets=test_targets)
 
-if __name__ == "__main__":
-    Path = 'data/'
+def MFCC(track, name):
+    genres = track.iloc[:, -1]
+    track = track.iloc[:, : -1]
+
+    corr_table = {}
+    i = 0
+
+    for index, row in genres.iteritems():
+        if str(row) in corr_table:
+            genres.loc[index] = corr_table[str(row)]
+        else:
+            corr_table[str(row)] = i
+            genres.loc[index] = i
+            i += 1
+
+    for index, row in genres.iteritems():
+        if row >= i:
+            raise ValueError
+
+    combined_set_targets = genres.values
+    combined_set_targets = combined_set_targets.astype(np.int32)
+    combined_set_inputs = normalize_nparray(track)
+    combined_set_inputs = combined_set_inputs.values
+
+    train_inputs, valid_inputs, test_inputs = cutting_datasets(combined_set_inputs)
+    train_targets, valid_targets, test_targets = cutting_datasets(combined_set_targets)
+
+    np.savez(PATH + 'MFCC-train_{}.npz'.format(name), inputs=train_inputs, targets=train_targets)
+    np.savez(PATH + 'MFCC-valid_{}.npz'.format(name), inputs=valid_inputs, targets=valid_targets)
+    np.savez(PATH + 'MFCC-test_{}.npz'.format(name), inputs=test_inputs, targets=test_targets)
+
+def main_FMA():
     # loaded = np.load('data/FMA_feature-genre.npz')
     # inputs, targets = loaded['inputs'], loaded['targets']
-    tracks = utils.load(Path + 'tracks.csv')
-    genres = utils.load(Path + 'genres.csv')
-    features = utils.load(Path + 'features.csv')
-    echonest = utils.load(Path + 'echonest.csv')
+    tracks = utils.load(PATH + 'tracks.csv')
+    genres = utils.load(PATH + 'genres.csv')
+    features = utils.load(PATH + 'features.csv')
+    echonest = utils.load(PATH + 'echonest.csv')
 
     np.testing.assert_array_equal(features.index, tracks.index)
     assert echonest.index.isin(tracks.index).all()
@@ -214,10 +247,19 @@ if __name__ == "__main__":
     FMA_genres(tracks, genres, features, echonest)
     FMA_reduce_genres(tracks, genres, features, echonest)
 
-
     # test = np.load(Path + 'FMA_feature-genre.npz')
     #
     # combined_set_targets = test['targets']
     # combined_set_targets = test['inputs']
+
+def main_MFCC():
+    track_1 = pd.read_csv(PATH + 'mfcc_13cof_track1_shuffle.csv', low_memory=False, header=None)
+    MFCC(track_1, '1')
+    track_2 = pd.read_csv(PATH + 'mfcc_13cof_track2_shuffle.csv', low_memory=False, header=None)
+    MFCC(track_2, '2')
+
+if __name__ == "__main__":
+    main_MFCC()
+
     print()
 

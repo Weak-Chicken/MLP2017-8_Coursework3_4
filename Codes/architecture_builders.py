@@ -7,7 +7,7 @@ from tensorflow.contrib.layers import batch_norm
 
 
 class DNNBuilder:
-    def __init__(self, bath_size, layer_depth, number_neurons_per_layer, name, output_dim, batch_norm_use=False):
+    def __init__(self, batch_size, layer_depth, number_neurons_per_layer, name, output_dim, batch_norm_use=False):
         """
 
         :param bath_size:
@@ -16,7 +16,7 @@ class DNNBuilder:
         :param name:
         :param batch_norm_use:
         """
-        self.bath_size = bath_size
+        self.batch_size = batch_size
         self.layer_depth = layer_depth
         self.number_neurons_per_layer = number_neurons_per_layer
         self.name = name
@@ -47,23 +47,28 @@ class DNNBuilder:
         return predict_op
 
 
-class Conv1DBuilder:
-    def __init__(self, bath_size, layer_depth, number_neurons_per_layer, name, output_dim, batch_norm_use=False):
+class Conv1dBuilder:
+    def __init__(self, batch_size, layer_depth, name, output_dim, number_features,
+                 stride, batch_norm_use=False, strided_dim_reduction=True):
         """
 
-        :param bath_size:
+        :param batch_size:
         :param layer_depth:
-        :param number_neurons_per_layer:
         :param name:
+        :param output_dim:
+        :param number_neurons_per_layer:
         :param batch_norm_use:
+        :param strided_dim_reduction:
         """
-        self.bath_size = bath_size
+        self.bath_size = batch_size
         self.layer_depth = layer_depth
-        self.number_neurons_per_layer = number_neurons_per_layer
+        self.number_features = number_features
         self.name = name
         self.output_dim = output_dim
         self.reuse = False
         self.batch_norm_use = batch_norm_use
+        self.strided_dim_reduction = strided_dim_reduction
+        self.stride = stride
 
     def __call__(self, input_batch, training=False, dropout_rate=0.0):
         """
@@ -76,16 +81,22 @@ class Conv1DBuilder:
         """
         output = input_batch
         with tf.variable_scope(self.name, reuse=self.reuse):
-            for num_layers in range(self.layer_depth):
-                with tf.variable_scope('DNN_Layer_{}'.format(num_layers + 1)):
-                    outputs = tf.layers.conv1d(outputs, self.layer_stage_sizes[i], [3, 3],
-                                               strides=5,
-                                               padding='SAME', activation=None)
-                    output = tf.layers.dropout(output, rate=dropout_rate, training=training)
-                    outputs = leaky_relu(outputs, name="leaky_relu{}".format(num_layers))
-                    if self.batch_norm_use:
-                        output = batch_norm(output, decay=0.99, scale=True,
-                                             center=True, is_training=training, renorm=False)
+            for feature in range(len(self.number_features)):
+                with tf.variable_scope('Conv1d_Layer_{}'.format(feature)):
+                    for num_layers in range(self.layer_depth):
+                        with tf.variable_scope('Conv1d_Layer_{}_{}'.format(feature, num_layers + 1)):
+                            output = tf.layers.conv1d(output, self.number_features[feature], 13, strides=self.stride,
+                                                      padding='SAME', activation=None)
+
+                            if self.batch_norm_use:
+                                output = batch_norm(output, decay=0.99, scale=True,
+                                                    center=True, is_training=training, renorm=False)
+                        if self.strided_dim_reduction == False:
+                            output = tf.layers.max_pooling1d(output, pool_size=13, strides=13)
+                        output = tf.layers.dropout(output, rate=dropout_rate, training=training)
+            c_conv_encoder = output
+            c_conv_encoder = tf.contrib.layers.flatten(c_conv_encoder)
+            c_conv_encoder = tf.layers.dense(c_conv_encoder, units=self.output_dim)
             self.reuse = True
-            predict_op = tf.layers.dense(output, units=self.output_dim)
+            predict_op = c_conv_encoder
         return predict_op
