@@ -1,3 +1,12 @@
+#############################################################
+#   Updated by Michael 
+#   Re-write the weights and bias
+#   Now able to embedded on Class written by Jon
+#   Results are subtle different due to the various loss function
+#   Loss-F : used to be reduce_mean
+#            now is softmax_cross_entropy
+#############################################################
+
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
