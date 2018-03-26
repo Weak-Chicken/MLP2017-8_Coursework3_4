@@ -12,7 +12,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 
 #############################################################
 # DATA
-mnist = input_data.read_data_sets('./mnist', one_hot=True)              # they has been normalized to range (0,1)
+mnist = input_data.read_data_sets('./mnist', one_hot=True)             # they has been normalized to range (0,1)
 #test_x = mnist.test.images[:2000]
 #test_y = mnist.test.labels[:2000]
 test_x = mnist.test.images
